@@ -27,4 +27,10 @@ All suggestions are predefined. No AI service, wearable, patient data, messages,
 
 ## Source
 
-`dist/index.html`, `dist/style.css`, and `dist/app.js` are the complete buildless app. The map is original SVG, including large touch targets, labelled paths, unlock states, and ambient animations. Google Fonts supplies optional typography; system fonts remain as fallbacks.
+`dist/index.html`, `dist/style.css`, `dist/app.js`, and `dist/motion.js` are the complete buildless app. The map is original SVG, including large touch targets, labelled paths, unlock states, and ambient animations. Google Fonts supplies optional typography; system fonts remain as fallbacks.
+
+## Island motion
+
+The character samples the actual SVG curves by arc length, with a walking gait and direction changes. A new tap cancels the old destination, retraces the walked path, and takes the new branch. Unlocks retain the mist while its layers drift apart; the completion sheet waits until the reveal finishes. Reduced motion and backgrounding settle animations immediately. Progress is saved before the reveal begins.
+
+Run animation lifecycle checks with `node --test tests/motion.test.cjs`.

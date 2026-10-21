@@ -3,3 +3,13 @@
 /* Route labels stay readable at the island's rendered size. */
 .pin-label{font-size:14px;stroke-width:3.5}.pin-time{font-size:11px;stroke-width:3}.locked-label{font-size:12px}#island{max-height:calc(100svh - 245px)}
 @media(max-width:700px){.pin-label{font-size:17px;stroke-width:4}.pin-time{font-size:13px}.locked-label{font-size:15px}#island{max-height:none}.welcome{margin-top:91px}.map-hint{font-size:11px}.dock>button{font-size:11px}}
+/* Only the character's SVG transform is updated per frame; the island stays mounted. */
+.traveller{transition:none;pointer-events:none}.traveller-body{animation:traveller-breathe 3.2s ease-in-out infinite;transform-origin:0 -12px}.traveller .leg,.traveller .arm{transform-box:fill-box;transform-origin:50% 0%}.walking .traveller-body{animation:walking-bob .36s ease-in-out infinite}.walking .leg-left,.walking .arm-right{animation:walking-stride .36s ease-in-out infinite alternate}.walking .leg-right,.walking .arm-left{animation:walking-stride .36s ease-in-out -.36s infinite alternate}.walking .traveller-shadow{animation:walking-shadow .36s ease-in-out infinite}.chosen-path .route-line{stroke:#fff8c4;stroke-width:9;animation:route-flow 1s linear infinite}.chosen-path .pin-ring{stroke:#e3b96e;stroke-width:3}.revealing .path-button,.revealing header button,.revealing .dock button{pointer-events:none}.new-area{animation:land-waking 2.6s ease-out both}.fog.clearing{pointer-events:none}.mist-wisp{will-change:transform,opacity}.fog.clearing .float-cloud{animation:none}.world.revealing .world-halo{animation:reveal-light 2.6s ease-in-out}.route-line{pointer-events:none}
+@keyframes walking-bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-2.4px) rotate(2deg)}}
+@keyframes walking-stride{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+@keyframes walking-shadow{0%,100%{transform:scaleX(1);opacity:.22}50%{transform:scaleX(.85);opacity:.15}}
+@keyframes traveller-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-.7px)}}
+@keyframes route-flow{to{stroke-dashoffset:-26}}
+@keyframes land-waking{from{opacity:.22}to{opacity:1}}
+@keyframes reveal-light{0%,100%{opacity:.3}50%{opacity:.65}}
+@media(prefers-reduced-motion:reduce){.traveller-body,.traveller .leg,.traveller .arm,.traveller-shadow,.new-area,.chosen-path .route-line,.world.revealing .world-halo{animation:none!important}.mist-wisp{will-change:auto}}
