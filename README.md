@@ -38,3 +38,7 @@ Run animation lifecycle checks with `node --test tests/*.test.cjs`.
 ## Exploring the island
 
 Drag with one finger or a mouse; pinch with two fingers or scroll to zoom. Zoom stays anchored beneath the gesture. Manual exploration pauses the follow camera; the crosshair resumes it and the corner icon frames the whole island. The camera gently follows walking and frames new areas during mist reveals. Arrow keys pan a focused island, +/− zoom, and R resets the view. Camera position is transient; habit progress remains saved.
+
+## Living scenery
+
+The island uses lightweight 2.5D SVG art: layered cliff faces, directional light, rounded gradient tree crowns, faceted pines, and projected shadows. Tree canopies sway independently of their rooted trunks. Animated currents connect the main pond to a waterfall; foam and expanding ripples finish the water motion. Cove water animates too. Decorative layers do not intercept taps. CSS animations pause when the tab is hidden and are disabled with reduced motion. This is illustrated depth, not a rotatable WebGL mesh.

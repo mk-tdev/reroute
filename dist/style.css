@@ -23,3 +23,16 @@
 .gesture-hint{position:absolute;bottom:5px;margin:0;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.4px;color:#8a9d86;pointer-events:none;z-index:2;transition:opacity .5s}.gesture-hint span{padding:0 6px}.exploring .gesture-hint{opacity:.35}.scene-caption{display:none}.compass{right:8%;bottom:60px;pointer-events:none}.bottom-ui{margin-top:12px}.world-halo{inset:8% 15% 10%;background:radial-gradient(ellipse,#fff7d9,#e0ecd0);filter:blur(30px)}
 @media(max-width:700px){.welcome{margin-top:88px}.welcome p{font-size:11px}#map{height:calc(100svh - 285px);min-height:370px;width:100%;border-radius:0;margin-top:8px}.camera-controls{bottom:32px}.gesture-hint{font-size:9px;bottom:8px}.compass{right:18px;bottom:100px;opacity:.65}.bottom-ui{margin-top:0;padding-top:8px}.map-hint{font-size:10px;max-width:340px;line-height:1.5;margin-bottom:12px}.prototype-label{display:none}.welcome h1{font-size:26px}.camera-controls button{width:44px;height:44px}}
 @media(max-height:700px) and (max-width:700px){.welcome{margin-top:75px}.welcome p{display:none}#map{min-height:300px;height:calc(100svh - 255px)}.welcome h1{font-size:23px;margin-bottom:0}}
+/* Sunlit, sculpted trees and water give the SVG world depth without a GPU-heavy scene. */
+.tree-crown,.pine-crown{transform-origin:0 5px;animation:canopy-wind var(--wind-duration,6s) ease-in-out var(--wind-delay,0s) infinite alternate;pointer-events:none}.pine-crown{animation-name:pine-wind}.living-tree,.living-water,.terrain{pointer-events:none}.tree-shadow{animation:shadow-breathe 7s ease-in-out infinite alternate;transform-origin:0 5px}.stream-current{animation:stream-flow 3s linear infinite}.waterfall-current{animation:waterfall-flow .85s linear infinite}.pond-ripple{transform-box:fill-box;transform-origin:center;animation:pond-ring 3.2s ease-out infinite}.pond-ripple.delayed{animation-delay:-1.6s}.fall-foam{transform-box:fill-box;transform-origin:center;animation:foam-breathe 1.8s ease-in-out infinite alternate}.cove-shimmer{animation:water-shimmer 4s ease-in-out infinite}.ocean-current{animation:ocean-flow 7s ease-in-out infinite}.world{background:radial-gradient(ellipse at 36% 24%,#fff9df 0%,#e7efdc 38%,#c4dfd5 100%)}
+@keyframes canopy-wind{from{transform:rotate(-1.8deg) skewX(-.6deg)}to{transform:rotate(2.3deg) skewX(.8deg)}}
+@keyframes pine-wind{from{transform:rotate(-1.2deg)}to{transform:rotate(1.6deg)}}
+@keyframes shadow-breathe{from{opacity:.16}to{opacity:.23}}
+@keyframes stream-flow{to{stroke-dashoffset:-52}}
+@keyframes waterfall-flow{to{stroke-dashoffset:-20}}
+@keyframes pond-ring{0%{transform:scale(.5);opacity:0}20%{opacity:.65}100%{transform:scale(1.9);opacity:0}}
+@keyframes foam-breathe{from{transform:scaleX(.85);opacity:.55}to{transform:scaleX(1.15);opacity:.85}}
+@keyframes water-shimmer{0%,100%{opacity:.3;translate:-2px 0}50%{opacity:.8;translate:2px 0}}
+@keyframes ocean-flow{0%,100%{translate:-4px 0;opacity:.25}50%{translate:6px 1px;opacity:.6}}
+.ambient-paused #island *{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.tree-crown,.pine-crown,.tree-shadow,.stream-current,.waterfall-current,.pond-ripple,.fall-foam,.cove-shimmer,.ocean-current{animation:none!important}.pond-ripple.delayed{display:none}}
