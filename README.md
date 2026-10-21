@@ -27,10 +27,14 @@ All suggestions are predefined. No AI service, wearable, patient data, messages,
 
 ## Source
 
-`dist/index.html`, `dist/style.css`, `dist/app.js`, and `dist/motion.js` are the complete buildless app. The map is original SVG, including large touch targets, labelled paths, unlock states, and ambient animations. Google Fonts supplies optional typography; system fonts remain as fallbacks.
+`dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/motion.js`, and `dist/camera.js` are the complete buildless app. The map is original SVG, including large touch targets, labelled paths, unlock states, and ambient animations. Google Fonts supplies optional typography; system fonts remain as fallbacks.
 
 ## Island motion
 
 The character samples the actual SVG curves by arc length, with a walking gait and direction changes. A new tap cancels the old destination, retraces the walked path, and takes the new branch. Unlocks retain the mist while its layers drift apart; the completion sheet waits until the reveal finishes. Reduced motion and backgrounding settle animations immediately. Progress is saved before the reveal begins.
 
-Run animation lifecycle checks with `node --test tests/motion.test.cjs`.
+Run animation lifecycle checks with `node --test tests/*.test.cjs`.
+
+## Exploring the island
+
+Drag with one finger or a mouse; pinch with two fingers or scroll to zoom. Zoom stays anchored beneath the gesture. Manual exploration pauses the follow camera; the crosshair resumes it and the corner icon frames the whole island. The camera gently follows walking and frames new areas during mist reveals. Arrow keys pan a focused island, +/− zoom, and R resets the view. Camera position is transient; habit progress remains saved.

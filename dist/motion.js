@@ -4,9 +4,10 @@ const islandMotion = (() => {
   let svg, traveller, frame = 0, cancelWalk, finishWalk, trail = [{x:400,y:568}];
   let revealAnimations = [];
   const distance = (a,b) => Math.hypot(a.x-b.x,a.y-b.y);
-  function paint(point, dx=1) {
+  function paint(point, dx=1, track=false) {
     if (!traveller) return;
     traveller.setAttribute('transform', `translate(${point.x} ${point.y})`);
+    if(track && typeof islandCamera !== 'undefined') islandCamera.track(point);
     traveller.dataset.x = point.x.toFixed(2);
     traveller.dataset.y = point.y.toFixed(2);
     if (Math.abs(dx)>.05) traveller.querySelector('.traveller-facing').setAttribute('transform',`scale(${dx<0?-1:1} 1)`);
@@ -42,7 +43,7 @@ const islandMotion = (() => {
       let settled=false;
       const settle=value=>{if(settled)return;settled=true;cancelAnimationFrame(frame);traveller?.classList.remove('walking');chosen?.classList.remove('chosen-path');cancelWalk=null;finishWalk=null;resolve(value)};
       cancelWalk=()=>settle(false);
-      finishWalk=()=>{trail=target;paint(target.at(-1));settle(true)};
+      finishWalk=()=>{trail=target;paint(target.at(-1),1,true);settle(true)};
       if(reduced.matches || length<2){finishWalk();return}
       traveller.classList.add('walking');
       const duration=Math.min(4800,Math.max(900,length/105*1000));
@@ -59,7 +60,7 @@ const islandMotion = (() => {
         const t=segment?Math.min(1,Math.max(0,(travel-a.distance)/segment)):1;
         const p={x:a.p.x+(b.p.x-a.p.x)*t,y:a.p.y+(b.p.y-a.p.y)*t};
         const base=b.back!==undefined?old.slice(0,b.back+1):target.slice(0,(a.forward||0)+1);
-        trail=[...base,p]; paint(p,b.p.x-a.p.x);
+        trail=[...base,p]; paint(p,b.p.x-a.p.x,true);
         if(progress===1)finishWalk();else frame=requestAnimationFrame(step);
       };
       frame=requestAnimationFrame(step);
