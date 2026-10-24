@@ -8,13 +8,17 @@ A mobile-first wellbeing prototype that turns everyday movement into a tiny livi
 
 **Future Health Digital Innovation Challenge · Wellbeing · Challenge 09: Sustaining Healthy Behaviors**
 
-[Hosted prototype](https://reroute-island-mk.equalbox1.chatgpt.site) · [Run locally](#run-locally) · [Demo walkthrough](#a-three-minute-demo) · [Challenge brief](https://hack2skill.com/event/futurehealthchallenge/)
+## [▶ Try the live ReRoute demo](https://reroute-island-mk.equalbox1.chatgpt.site)
+
+**Public demo — no sign-in or installation required.** Open on your phone or desktop, tap a glowing path, and use **Preview completion** to see the island unlock.
+
+[Run locally](#run-locally) · [Demo walkthrough](#a-three-minute-demo) · [Challenge brief](https://hack2skill.com/event/futurehealthchallenge/)
 
 ![ReRoute's living island on mobile](living-island-mobile.png)
 
 </div>
 
-> **Prototype status:** Working browser experience with predefined activities, local progress, and simulated demo days. No clinical validation, measured health outcomes, AI personalization, or wearable integration is claimed. The hosted prototype currently has restricted access; running locally is the reproducible review path.
+> **Prototype status:** Working browser experience with predefined activities, local progress, and simulated demo days. No clinical validation, measured health outcomes, AI personalization, or wearable integration is claimed. The hosted prototype is public and requires no sign-in. You can also run it locally for a reproducible review.
 
 ## The idea
 
@@ -76,7 +80,7 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
 
 Open **http://127.0.0.1:4173**. Stop the server with `Ctrl+C`.
 
-For access-controlled repositories, authenticate with GitHub first. To review on a physical phone, serve on your local network using an appropriate development setup; the loopback command above is accessible only on the host computer.
+The source repository is public; cloning does not require authentication. To review on a physical phone, serve on your local network using an appropriate development setup; the loopback command above is accessible only on the host computer.
 
 ### Controls
 
@@ -155,7 +159,7 @@ Define denominators and missing-data handling before enrollment. Keep simulated 
 
 ## Next milestones
 
-1. **Submission readiness:** demo video, accessible reviewer deployment, physical-phone checks, and documented accessibility findings.
+1. **Submission readiness:** demo video, physical-phone checks, and documented accessibility findings. The public reviewer deployment is available above.
 2. **A real habit loop:** calendar days, goal selection, user-controlled reminders, and explicit recovery journeys after absence.
 3. **Inclusive content:** Arabic/RTL, co-designed movement alternatives, and professional review.
 4. **Pilot readiness:** consent, optional outcome collection, deletion/export controls, and a pre-specified evaluation protocol.
