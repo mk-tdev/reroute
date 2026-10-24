@@ -20,6 +20,8 @@ const islandCamera = (() => {
     following = true;
   let actor = { x: 400, y: 568 };
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  // The app registers a translator once its locale loads; until then, English.
+  const label = (key, fallback) => globalThis.rerouteT?.(key) ?? fallback;
   function limits() {
     // Keep some land in view even at the furthest edge.
     targetX = clamp(targetX, 150, 650);
@@ -34,7 +36,7 @@ const islandCamera = (() => {
     document.querySelector("#camera-follow").setAttribute("aria-pressed", String(following));
     document
       .querySelector("#camera-follow")
-      .setAttribute("aria-label", following ? "Camera following your character" : "Follow your character");
+      .setAttribute("aria-label", following ? label("camera.following", "Camera following your character") : label("camera.follow", "Follow your character"));
     document.querySelector("#camera-out").disabled = targetZoom <= 1.001;
     document.querySelector("#camera-in").disabled = targetZoom >= 2.799;
   }
