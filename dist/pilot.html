@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ReRoute Pilot Dashboard</title>
+    <meta name="description" content="Aggregate, pseudonymous pilot measures for ReRoute: persistence, recovery after a lapse, detour usefulness and retention." />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@600;700&display=swap" />
+    <style>
+      :root {
+        --bg: #f3f5ec;
+        --surface: #fbfaf1;
+        --ink: #23392d;
+        --ink-2: #5d7262;
+        --muted: #8a9a86;
+        --line: #e1e8d6;
+        --grid: #e8ede0;
+        --mark: #2e7d4f;
+        --mark-soft: #cfe3d5;
+        --banner: #fbf1d9;
+        --banner-ink: #6e5422;
+        --focus: #ba7c49;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #141c17;
+          --surface: #1c2620;
+          --ink: #e6efe6;
+          --ink-2: #b4c5b6;
+          --muted: #8a9c8c;
+          --line: #2c3a31;
+          --grid: #26332b;
+          --mark: #45a872;
+          --mark-soft: #2a4636;
+          --banner: #3a3020;
+          --banner-ink: #f0d9a6;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #141c17;
+        --surface: #1c2620;
+        --ink: #e6efe6;
+        --ink-2: #b4c5b6;
+        --muted: #8a9c8c;
+        --line: #2c3a31;
+        --grid: #26332b;
+        --mark: #45a872;
+        --mark-soft: #2a4636;
+        --banner: #3a3020;
+        --banner-ink: #f0d9a6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 14px/1.5 "DM Sans", system-ui, sans-serif;
+      }
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 28px 16px 60px;
+      }
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+      h1 {
+        font: 700 26px/1.2 Manrope, sans-serif;
+        letter-spacing: -0.6px;
+        margin: 4px 0 0;
+      }
+      h2 {
+        font: 600 16px Manrope, sans-serif;
+        margin: 0 0 4px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      select,
+      input,
+      button {
+        font: inherit;
+        color: var(--ink);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 12px;
+        min-height: 40px;
+      }
+      button {
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 2px;
+      }
+      .banner {
+        background: var(--banner);
+        color: var(--banner-ink);
+        border-radius: 14px;
+        padding: 12px 16px;
+        margin-bottom: 18px;
+        font-size: 13px;
+      }
+      .banner strong {
+        letter-spacing: 0.6px;
+      }
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .tile,
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 16px;
+      }
+      .tile .value {
+        font: 700 30px/1.1 Manrope, sans-serif;
+        letter-spacing: -0.8px;
+        margin: 6px 0 4px;
+      }
+      .tile .label {
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .tile small,
+      .card small,
+      .note {
+        color: var(--ink-2);
+        font-size: 12px;
+        display: block;
+      }
+      .tile.headline {
+        border-color: var(--mark);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 760px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .chart {
+        position: relative;
+        margin-top: 12px;
+      }
+      .chart svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        overflow: visible;
+      }
+      .axis text,
+      .value-label {
+        fill: var(--ink-2);
+        font-size: 12px;
+      }
+      .gridline {
+        stroke: var(--grid);
+      }
+      .bar {
+        fill: var(--mark);
+      }
+      .bar-track {
+        fill: var(--mark-soft);
+      }
+      .hit {
+        fill: transparent;
+        cursor: crosshair;
+      }
+      .hit:hover + .bar,
+      .hit:focus + .bar {
+        opacity: 0.8;
+      }
+      .tooltip {
+        position: absolute;
+        pointer-events: none;
+        background: var(--ink);
+        color: var(--surface);
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        transform: translate(-50%, calc(-100% - 10px));
+        opacity: 0;
+        transition: opacity 0.12s;
+      }
+      .tooltip.show {
+        opacity: 1;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 6px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+      }
+      th {
+        font-weight: 600;
+        color: var(--ink-2);
+        font-size: 12px;
+      }
+      td.num {
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .inline-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .inline-bar i {
+        display: block;
+        height: 8px;
+        border-radius: 0 4px 4px 0;
+        background: var(--mark);
+        min-width: 2px;
+      }
+      .inline-bar span {
+        font-variant-numeric: tabular-nums;
+        min-width: 3ch;
+      }
+      details {
+        margin-top: 10px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--ink-2);
+        font-size: 12px;
+      }
+      .defs {
+        margin-top: 18px;
+      }
+      .defs dt {
+        font-weight: 600;
+        margin-top: 10px;
+      }
+      .defs dd {
+        margin: 2px 0 0;
+        color: var(--ink-2);
+      }
+      .empty {
+        text-align: center;
+        padding: 40px 16px;
+        color: var(--ink-2);
+      }
+      a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <div class="eyebrow">ReRoute · Pilot</div>
+          <h1>Is it helping people keep going?</h1>
+        </div>
+        <div class="controls">
+          <label class="note" for="cohort">Cohort</label>
+          <select id="cohort"></select>
+          <span id="token-box" hidden><input id="token" type="password" placeholder="Admin token" autocomplete="off" aria-label="Admin token" /> <button id="token-go">Load</button></span>
+        </div>
+      </header>
+      <div id="banner"></div>
+      <div id="content"><p class="empty">Loading…</p></div>
+      <dl class="defs card">
+        <h2>How each measure is defined</h2>
+        <dt>Weeks meeting goal</dt>
+        <dd>Completed participant-weeks (days 1–7, 8–14, … from joining) with movement on at least the participant’s own weekly goal. Self-reported; simulated demo journeys are excluded.</dd>
+        <dt>Returned within 7 days</dt>
+        <dd>A lapse is two or more days with neither movement nor a chosen rest day. Of lapses observed for at least a week, the share followed by movement within 7 days.</dd>
+        <dt>Detour acceptance and completion</dt>
+        <dd>Acceptance is detours started ÷ times “Plans changed” produced suggestions. Completion is detours finished ÷ detours started.</dd>
+        <dt>Retention</dt>
+        <dd>Participants with any movement or chosen rest in week 2 (or week 4), among those observed through that week.</dd>
+        <dt>Privacy</dt>
+        <dd>Events are pseudonymous and contain no names, contacts, location or free text. Any group smaller than five participants (or five offers) is suppressed.</dd>
+      </dl>
+    </main>
+    <div class="tooltip" id="tooltip" role="presentation"></div>
+    <script type="module" src="js/pilot.js"></script>
+  </body>
+</html>

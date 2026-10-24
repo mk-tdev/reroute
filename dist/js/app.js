@@ -50,9 +50,10 @@ const contextOf = (e) =>
   e.kind === "route" ? t(`route.${e.id}.context`) : `${t(`setting.${e.setting}`)} · ${t(`intensity.${e.intensity}`)}`;
 const formatDate = (key, options) => new Intl.DateTimeFormat(locale() === "ar" ? "ar-AE" : "en-GB", options).format(new Date(`${key}T12:00`));
 
-// Pilot events are pseudonymous and only sent after the person joins.
+// Pilot events are pseudonymous and only sent after the person joins. Nothing is sent
+// while demo tools have shifted the island's clock, so demo days never reach pilot data.
 const track = (type, fields = {}) => {
-  if (state.pilot) services.sendPilotEvent(state.pilot, { type, date: today(), ...fields });
+  if (state.pilot && !state.demoOffset) services.sendPilotEvent(state.pilot, { type, date: today(), ...fields });
 };
 
 configureSheet({

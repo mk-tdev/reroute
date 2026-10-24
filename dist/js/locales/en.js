@@ -333,7 +333,7 @@ export default {
   // Demo tools
   "demo.eyebrow": "FOR REVIEWERS",
   "demo.title": "Demo tools",
-  "demo.body": "Days follow your real calendar. These shortcuts move the island’s clock forward so you can see the habit loop in a few minutes.",
+  "demo.body": "Days follow your real calendar. These shortcuts move the island’s clock forward so you can see the habit loop in a few minutes. While the clock is moved, nothing is shared with a pilot study.",
   "demo.nextDay": "Skip ahead one day",
   "demo.lapse": "Skip ahead three days (see a comeback)",
   "demo.today": "Back to today",
