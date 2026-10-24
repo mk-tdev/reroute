@@ -687,7 +687,7 @@ document.addEventListener("visibilitychange", () => document.documentElement.cla
 function greetOnOpen() {
   if (!state.onboarded) return onboarding();
   const away = habit.lapse(state, today());
-  if (away && state.welcomedBackOn !== today()) welcomeBack(away.gap);
+  if (away && state.welcomedBackOn !== today()) welcomeBack(away.gap + 1); // days since last active
 }
 
 globalThis.rerouteT = t; // lets camera.js label its controls in the current language

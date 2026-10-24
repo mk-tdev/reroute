@@ -226,7 +226,7 @@ export default {
   "back.title": "Welcome back.",
   "back.body": ({ gap, shown }) =>
     `It’s been ${gap === 1 ? "a day" : `${shown} days`}. Your island is exactly as you left it. Nothing to catch up on, and no streak to rebuild.`,
-  "back.science": "Missing a few days doesn’t undo a habit. Coming back does more than never slipping.",
+  "back.science": "Missing a few days doesn’t undo a habit. What matters is coming back.",
   "back.suggest": "A small way back in:",
   "back.start": "Start with {minutes} min →",
   "back.explore": "I’ll choose my own path",
